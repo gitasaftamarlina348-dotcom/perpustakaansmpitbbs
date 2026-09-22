@@ -1,0 +1,750 @@
+
+
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Perpustakaan SMP IT BBS</title>
+<meta name="description" content="Website resmi Perpustakaan SMP IT BBS — layanan, koleksi digital, dan katalog buku.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --primary:#3245C7;
+    --primary-deep:#20287E;
+    --primary-soft:#EEF1FF;
+    --accent:#F4A73B;
+    --accent-soft:#FFF3DF;
+    --ink:#171B3D;
+    --ink-soft:#5B6172;
+    --line:#E4E6F2;
+    --bg:#FFFFFF;
+    --bg-alt:#F6F7FC;
+    --white:#FFFFFF;
+    --max-w:1180px;
+    --r-lg:28px;--r-md:16px;--r-sm:10px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;font-family:'Inter', system-ui, sans-serif;color:var(--ink-soft);
+    background:var(--bg);line-height:1.65;
+  }
+  h1,h2,h3,h4{font-family:'Sora', system-ui, sans-serif;margin:0;color:var(--ink);line-height:1.2;font-weight:700;}
+  a{color:inherit;}
+  img,svg{max-width:100%;display:block;}
+  .wrap{max-width:var(--max-w);margin:0 auto;padding:0 24px;}
+  .tracked{text-transform:uppercase;letter-spacing:.08em;font-size:0.78rem;font-weight:700;color:var(--primary);}
+ 
+  .scroll-progress{position:fixed;top:0;left:0;height:3px;width:0%;background:linear-gradient(90deg,var(--primary),var(--accent));z-index:300;}
+ 
+  /* ---------- Reveal on scroll ---------- */
+  .reveal{opacity:0;filter:blur(6px);transform:translateY(30px) scale(.97) rotate(-0.6deg);transition:opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1), filter .8s ease;}
+  .reveal.is-visible{opacity:1;filter:blur(0);transform:none;}
+  .reveal-delay-1.is-visible{transition-delay:.1s;}
+  .reveal-delay-2.is-visible{transition-delay:.2s;}
+  .reveal-delay-3.is-visible{transition-delay:.3s;}
+  @media (prefers-reduced-motion: reduce){.reveal{opacity:1;filter:none;transform:none;transition:none;}html{scroll-behavior:auto;}.floaty{animation:none !important;}}
+ 
+  /* ---------- Nav ---------- */
+  .navbar{
+    position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.92);backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);transition:box-shadow .3s ease;
+  }
+  .navbar.is-scrolled{box-shadow:0 8px 24px -18px rgba(23,27,61,0.25);}
+  .navbar-inner{display:flex;align-items:center;justify-content:space-between;padding:16px 0;gap:20px;}
+  .brand{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0;}
+  .brand-mark{width:34px;height:34px;border-radius:50%;background:var(--white);display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;box-shadow:0 0 0 1px var(--line);}
+  .brand-mark img{width:100%;height:100%;object-fit:cover;display:block;}
+  .brand-name{font-family:'Sora',sans-serif;font-weight:700;font-size:1.02rem;color:var(--ink);}
+  .nav-links{display:flex;align-items:center;gap:4px;}
+  .nav-links a{
+    text-decoration:none;color:var(--ink-soft);font-size:0.88rem;font-weight:600;
+    padding:9px 14px;border-radius:100px;transition:background .2s ease,color .2s ease;white-space:nowrap;
+  }
+  .nav-links a:hover{background:var(--primary-soft);color:var(--primary);}
+  .nav-links a.active{background:var(--primary-soft);color:var(--primary);}
+  .nav-links a.cta{background:var(--primary);color:var(--white);margin-left:6px;position:relative;overflow:hidden;}
+  .nav-links a.cta::before{content:'';position:absolute;top:0;left:-60%;width:40%;height:100%;background:linear-gradient(120deg,transparent,rgba(255,255,255,.55),transparent);transform:skewX(-20deg);transition:left .6s ease;}
+  .nav-links a.cta:hover::before{left:120%;}
+  .nav-links a.cta:hover{background:var(--primary-deep);}
+  @media (max-width:860px){.nav-links a:not(.cta){display:none;}}
+ 
+  /* ---------- Hero ---------- */
+  .hero{padding:72px 0 40px;overflow:hidden;position:relative;}
+  .hero::before{
+    content:'';position:absolute;inset:-20% -10%;z-index:-1;pointer-events:none;
+    background:
+      radial-gradient(38% 38% at 15% 20%, rgba(50,69,199,0.14), transparent 70%),
+      radial-gradient(32% 32% at 85% 15%, rgba(244,167,59,0.16), transparent 70%),
+      radial-gradient(40% 40% at 75% 85%, rgba(50,69,199,0.10), transparent 70%);
+    animation:meshDrift 16s ease-in-out infinite;
+  }
+  @keyframes meshDrift{
+    0%,100%{transform:translate(0,0) scale(1);}
+    50%{transform:translate(-2%,3%) scale(1.06);}
+  }
+  .hero-inner{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;}
+  .hero-text .tracked{display:inline-block;margin-bottom:16px;}
+  .hero-text h1{font-size:clamp(2.1rem,4vw,2.9rem);letter-spacing:-.01em;}
+  .hero-text .tagline{margin-top:18px;font-size:1.05rem;max-width:44ch;}
+  .hero-actions{display:flex;gap:14px;margin-top:32px;flex-wrap:wrap;}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;padding:14px 26px;border-radius:100px;
+    font-weight:600;font-size:0.92rem;text-decoration:none;transition:transform .2s ease, box-shadow .2s ease, background .2s ease;
+  }
+  .btn-primary{background:var(--primary);color:var(--white);box-shadow:0 14px 28px -14px rgba(50,69,199,.55);position:relative;overflow:hidden;}
+  .btn-primary::before{content:'';position:absolute;top:0;left:-70%;width:40%;height:100%;background:linear-gradient(120deg,transparent,rgba(255,255,255,.5),transparent);transform:skewX(-20deg);transition:left .65s ease;}
+  .btn-primary:hover::before{left:120%;}
+  .btn-primary:hover{background:var(--primary-deep);transform:translateY(-2px);box-shadow:0 18px 34px -14px rgba(50,69,199,.65);}
+  .btn-ghost{background:var(--white);color:var(--ink);border:1px solid var(--line);transition:transform .25s ease, border-color .25s ease, color .25s ease, box-shadow .25s ease;}
+  .btn-ghost:hover{border-color:var(--primary);color:var(--primary);transform:translateY(-2px);box-shadow:0 14px 26px -18px rgba(23,27,61,.3);}
+ 
+  .hero-art{position:relative;display:flex;align-items:center;justify-content:center;}
+  .hero-blob{
+    position:absolute;inset:0;margin:auto;width:92%;aspect-ratio:1/1;
+    background:linear-gradient(135deg,var(--primary-soft),var(--accent-soft));
+    border-radius:44% 56% 62% 38% / 48% 42% 58% 52%;
+    animation:blobMorph 10s ease-in-out infinite;
+    will-change:border-radius, transform;
+  }
+  @keyframes blobMorph{
+    0%,100%{border-radius:44% 56% 62% 38% / 48% 42% 58% 52%;transform:rotate(0deg) scale(1);}
+    33%{border-radius:58% 42% 40% 60% / 60% 44% 56% 40%;transform:rotate(4deg) scale(1.02);}
+    66%{border-radius:40% 60% 58% 42% / 38% 56% 44% 62%;transform:rotate(-3deg) scale(0.99);}
+  }
+  .hero-art svg{position:relative;z-index:1;width:100%;max-width:420px;transition:transform .3s ease;}
+  .hero-art:hover svg{transform:translateY(-4px) scale(1.015);}
+  .hero-glow{position:absolute;width:260px;height:260px;border-radius:50%;pointer-events:none;
+    background:radial-gradient(circle, rgba(50,69,199,0.16), transparent 70%);
+    filter:blur(6px);transform:translate(-50%,-50%);opacity:0;transition:opacity .4s ease;z-index:0;}
+  .hero:hover .hero-glow{opacity:1;}
+  .grad-text{background:linear-gradient(90deg,var(--primary),var(--accent),var(--primary));
+    background-size:200% auto;-webkit-background-clip:text;background-clip:text;color:transparent;
+    animation:gradShift 6s ease-in-out infinite;}
+  @keyframes gradShift{0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
+  .floaty{animation:floaty 5s ease-in-out infinite;}
+  .floaty-slow{animation:floaty 7s ease-in-out infinite;}
+  @keyframes floaty{0%,100%{transform:translateY(0);}50%{transform:translateY(-14px);}}
+  @media (max-width:900px){.hero-inner{grid-template-columns:1fr;}.hero-art{order:-1;max-width:320px;margin:0 auto;}}
+ 
+  /* ---------- Section shell ---------- */
+  section{padding:88px 0;}
+  .section-head{max-width:620px;margin:0 auto 48px;text-align:center;}
+  .section-head .tracked{position:relative;padding-bottom:12px;display:inline-block;}
+  .section-head .tracked::after{
+    content:'';position:absolute;left:50%;bottom:0;width:0;height:2px;
+    background:linear-gradient(90deg,var(--primary),var(--accent));
+    transform:translateX(-50%);transition:width .7s cubic-bezier(.2,.8,.2,1) .15s;
+  }
+  .section-head.is-visible .tracked::after{width:64px;}
+  .section-head h2{font-size:clamp(1.7rem,3vw,2.3rem);margin-top:12px;}
+  .section-head p{margin-top:14px;font-size:1.01rem;}
+ 
+  /* ---------- Tentang mini cards ---------- */
+  .about-text{max-width:640px;margin:0 auto;text-align:center;}
+  .about-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:48px;}
+  .mini-card{
+    background:var(--white);border:1px solid var(--line);border-radius:var(--r-md);
+    padding:30px 26px;text-decoration:none;transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+  }
+  .mini-card{transform-style:preserve-3d;perspective:800px;}
+  .mini-card:hover{transform:translateY(-6px) rotateX(2deg) rotateY(-2deg);box-shadow:0 20px 36px -22px rgba(23,27,61,.22);border-color:transparent;}
+  .mini-card .icon{width:46px;height:46px;border-radius:12px;background:var(--primary-soft);display:flex;align-items:center;justify-content:center;margin-bottom:18px;transition:transform .35s ease, background .35s ease;}
+  .mini-card:hover .icon{transform:scale(1.12) rotate(-6deg);background:var(--accent-soft);}
+  .mini-card .icon svg{width:24px;height:24px;color:var(--primary);}
+  .mini-card h3{font-size:1.08rem;}
+  .mini-card p{margin-top:8px;font-size:0.92rem;}
+  .mini-card .go{margin-top:14px;display:inline-flex;align-items:center;gap:6px;font-weight:600;color:var(--primary);font-size:0.88rem;}
+  @media (max-width:860px){.about-cards{grid-template-columns:1fr;}}
+ 
+  /* ---------- Layanan ---------- */
+  .layanan-section{background:var(--bg-alt);}
+  .feature-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+  .feature-card{
+    background:var(--white);border-radius:var(--r-md);padding:26px 22px;
+    box-shadow:0 16px 32px -26px rgba(23,27,61,.18);transition:transform .25s ease;
+  }
+  .feature-card{transition:transform .3s ease, box-shadow .3s ease;}
+  .feature-card:hover{transform:translateY(-6px);box-shadow:0 22px 38px -22px rgba(23,27,61,.28);}
+  .feature-card .icon{width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;margin-bottom:14px;transition:transform .35s ease;}
+  .feature-card:hover .icon{transform:scale(1.12) rotate(6deg);}
+  .feature-card .icon svg{width:22px;height:22px;color:var(--white);}
+  .feature-card h4{font-size:0.98rem;}
+  .feature-card p{margin-top:6px;font-size:0.85rem;}
+  @media (max-width:860px){.feature-grid{grid-template-columns:repeat(2,1fr);}}
+ 
+  /* ---------- Organisasi ---------- */
+  .orgchart{display:flex;flex-direction:column;align-items:center;}
+  .org-node{background:var(--white);border:1px solid var(--line);border-radius:var(--r-sm);padding:14px 24px;text-align:center;min-width:210px;box-shadow:0 10px 24px -20px rgba(23,27,61,.2);}
+  .org-node .role{font-size:0.7rem;letter-spacing:.06em;color:var(--primary);font-weight:700;text-transform:uppercase;}
+  .org-node .name{font-weight:600;color:var(--ink);margin-top:4px;font-size:0.96rem;font-family:'Sora',sans-serif;}
+  .org-connector{width:1px;height:28px;background:var(--line);}
+  .org-row{display:flex;gap:40px;position:relative;padding-top:28px;}
+  .org-row::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:calc(100% - 210px);height:1px;background:var(--line);}
+  .org-row .org-node{position:relative;}
+  .org-row .org-node::before{content:'';position:absolute;top:-28px;left:50%;transform:translateX(-50%);width:1px;height:28px;background:var(--line);}
+  @media (max-width:700px){.org-row{flex-direction:column;align-items:center;gap:20px;}.org-row::before,.org-row .org-node::before{display:none;}}
+ 
+  /* ---------- Pustakawan ---------- */
+  .team-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:24px;}
+  .team-card{text-align:center;width:220px;}
+  .team-avatar{
+    width:100%;aspect-ratio:1/1;border-radius:var(--r-md);
+    background:linear-gradient(160deg, var(--primary), var(--accent));
+    display:flex;align-items:center;justify-content:center;margin-bottom:16px;transition:transform .3s ease;
+  }
+  .team-avatar{transition:transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s ease;}
+  .team-card:hover .team-avatar{transform:translateY(-6px) rotate(-1.5deg);box-shadow:0 20px 34px -18px rgba(50,69,199,.45);}
+  .team-avatar span{font-family:'Sora',sans-serif;font-weight:700;font-size:2.1rem;color:var(--white);}
+ 
+  /* ---------- Bingkai foto pustakawan (untuk foto asli) ---------- */
+  .avatar-ring{
+    position:relative;width:100%;aspect-ratio:1/1;border-radius:var(--r-md);
+    padding:4px;margin-bottom:16px;
+    background:linear-gradient(135deg, var(--primary), var(--accent), var(--primary-deep));
+    animation:avatarFloat 4.5s ease-in-out infinite;
+    box-shadow:0 18px 34px -18px rgba(50,69,199,.5);
+    transition:transform .35s cubic-bezier(.2,.8,.2,1);
+  }
+  @keyframes avatarFloat{
+    0%,100%{transform:translateY(0) scale(1);}
+    50%{transform:translateY(-10px) scale(1.015);}
+  }
+  .team-card:hover .avatar-ring{animation-play-state:paused;transform:translateY(-6px) scale(1.02);}
+  .avatar-ring .avatar-photo{
+    width:100%;height:100%;border-radius:calc(var(--r-md) - 4px);overflow:hidden;
+    background:linear-gradient(160deg, var(--primary-soft), var(--accent-soft));
+    position:relative;
+  }
+  .avatar-ring .avatar-photo img{
+    width:100%;height:100%;object-fit:cover;object-position:center center;
+    display:block;transition:transform .5s ease;
+  }
+  .team-card:hover .avatar-ring .avatar-photo img{transform:scale(1.08);}
+  .avatar-ring .avatar-photo::after{
+    content:'';position:absolute;inset:0;border-radius:inherit;
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.4), inset 0 -40px 50px -20px rgba(23,27,61,.35);
+    pointer-events:none;
+  }
+  .team-card .name{font-weight:600;color:var(--ink);font-size:1rem;font-family:'Sora',sans-serif;}
+  .team-card .role{font-size:0.86rem;margin-top:2px;}
+  @media (max-width:860px){.team-grid{gap:20px;}.team-card{width:45%;}}
+ 
+  /* ---------- Kanal ---------- */
+  .channels-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;}
+  .channel-card{
+    background:var(--white);border:1px solid var(--line);border-radius:var(--r-md);padding:30px 28px;
+    display:flex;flex-direction:column;gap:12px;transition:transform .25s ease, box-shadow .25s ease;
+  }
+  .channel-card:hover{transform:translateY(-6px) scale(1.01);box-shadow:0 22px 40px -24px rgba(23,27,61,.25);}
+  .channel-card .go{transition:gap .25s ease, color .25s ease;}
+  .channel-card:hover .go{gap:10px;}
+  .channel-card .tag{font-size:0.74rem;font-weight:700;color:var(--primary);letter-spacing:.05em;text-transform:uppercase;}
+  .channel-card h3{font-size:1.18rem;}
+  .channel-card p{margin:0;font-size:0.94rem;}
+  .channel-card .go{margin-top:auto;font-weight:600;color:var(--ink);text-decoration:none;display:inline-flex;align-items:center;gap:6px;}
+  .channel-card .go:hover{color:var(--primary);}
+  @media (max-width:860px){.channels-grid{grid-template-columns:1fr;}}
+ 
+  /* ---------- Kontak ---------- */
+  .contact-grid{display:grid;grid-template-columns:0.9fr 1.1fr;gap:22px;}
+  .contact-info{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-content:start;}
+  .info-card{background:var(--bg-alt);border-radius:var(--r-sm);padding:22px;}
+  .info-card svg{width:22px;height:22px;color:var(--primary);margin-bottom:10px;}
+  .info-card .label{font-weight:600;color:var(--ink);font-size:0.95rem;font-family:'Sora',sans-serif;}
+  .info-card .value{font-size:0.87rem;margin-top:4px;}
+  .form-card{background:var(--primary);color:rgba(255,255,255,0.92);border-radius:var(--r-md);padding:36px 32px;}
+  .form-card h3{color:var(--white);font-size:1.35rem;margin-bottom:10px;}
+  .form-card p{color:rgba(255,255,255,0.82);font-size:0.95rem;margin:0 0 22px;}
+  .form-card .btn-primary{background:var(--white);color:var(--primary-deep);box-shadow:none;}
+  .form-card .btn-primary:hover{background:var(--accent-soft);}
+  @media (max-width:860px){.contact-grid{grid-template-columns:1fr;}}
+ 
+  /* ---------- Footer ---------- */
+  .footer-wrap{background:var(--ink);border-radius:var(--r-lg);color:rgba(255,255,255,0.75);padding:52px 44px 28px;margin:0 24px 24px;max-width:calc(var(--max-w) - 0px);margin-left:auto;margin-right:auto;}
+  .footer-grid{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:44px;padding-bottom:30px;border-bottom:1px solid rgba(255,255,255,0.12);}
+  .footer-wrap h4{color:var(--white);font-size:0.86rem;margin-bottom:16px;font-family:'Inter',sans-serif;font-weight:600;text-transform:uppercase;letter-spacing:.06em;}
+  .footer-wrap .foot-brand{display:flex;align-items:center;gap:10px;font-family:'Sora',sans-serif;font-weight:700;font-size:1.15rem;color:var(--white);}
+  .footer-wrap p{color:rgba(255,255,255,0.6);font-size:0.9rem;max-width:34ch;margin-top:14px;}
+  .footer-wrap ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;}
+  .footer-wrap ul a{text-decoration:none;color:rgba(255,255,255,0.75);font-size:0.9rem;}
+  .footer-wrap ul a:hover{color:var(--accent);}
+  .footer-bottom{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;padding-top:20px;font-size:0.8rem;color:rgba(255,255,255,0.45);}
+  @media (max-width:860px){.footer-grid{grid-template-columns:1fr;gap:28px;}}
+ 
+  /* ---------- Back to top ---------- */
+  .to-top{
+    position:fixed;right:24px;bottom:24px;width:48px;height:48px;border-radius:50%;
+    background:var(--primary);color:var(--white);display:flex;align-items:center;justify-content:center;
+    box-shadow:0 14px 28px -12px rgba(50,69,199,.55);border:none;cursor:pointer;z-index:200;
+    opacity:0;transform:translateY(16px) scale(.9);pointer-events:none;
+    transition:opacity .35s ease, transform .35s ease, background .25s ease;
+  }
+  .to-top.show{opacity:1;transform:translateY(0) scale(1);pointer-events:auto;}
+  .to-top:hover{background:var(--primary-deep);transform:translateY(-3px) scale(1.05);}
+  .to-top svg{width:20px;height:20px;}
+ 
+  /* ---------- Spotlight hover pada kartu ---------- */
+  .mini-card, .feature-card, .channel-card, .info-card{position:relative;isolation:isolate;}
+  .mini-card::before, .feature-card::before, .channel-card::before{
+    content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:var(--r-md) var(--r-md) 0 0;
+    background:linear-gradient(90deg,var(--primary),var(--accent));
+    transform:scaleX(0);transform-origin:left;transition:transform .45s cubic-bezier(.2,.8,.2,1);z-index:3;
+  }
+  .mini-card:hover::before, .feature-card:hover::before, .channel-card:hover::before{transform:scaleX(1);}
+  .mini-card::after, .feature-card::after, .channel-card::after{
+    content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0;
+    background:radial-gradient(220px circle at var(--mx,50%) var(--my,50%), rgba(50,69,199,0.14), transparent 65%);
+    transition:opacity .35s ease;z-index:2;
+  }
+  .mini-card:hover::after, .feature-card:hover::after, .channel-card:hover::after{opacity:1;}
+ 
+  /* ---------- Tombol: ripple klik + efek magnet ---------- */
+  .btn, .nav-links a.cta{position:relative;will-change:transform;}
+  .btn-ripple{
+    position:absolute;border-radius:50%;pointer-events:none;
+    background:rgba(255,255,255,0.55);transform:scale(0);
+    animation:rippleGo .6s ease-out forwards;
+  }
+  .btn-primary .btn-ripple{background:rgba(255,255,255,0.55);}
+  .btn-ghost .btn-ripple{background:rgba(50,69,199,0.25);}
+  @keyframes rippleGo{to{transform:scale(1);opacity:0;}}
+ 
+  /* ---------- Partikel klik global ---------- */
+  #fx-canvas{position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:9999;}
+ 
+  /* ---------- Judul hero: kilau berjalan ---------- */
+  .hero-text .tracked{position:relative;}
+</style>
+</head>
+<body>
+ 
+<div class="scroll-progress" id="scrollProgress"></div>
+<canvas id="fx-canvas"></canvas>
+ 
+<nav class="navbar" id="navbar">
+  <div class="wrap navbar-inner">
+    <a href="#beranda" class="brand">
+<span class="brand-mark" style="background:var(--white);">
+    <img src="img/logo.png" alt="Logo SMP IT Bina Bangsa Sejahtera">
+</span>
+      <span class="brand-name">SMP IT Bina Bangsa Sejahtera</span>
+    </a>
+    <div class="nav-links" id="navLinks">
+      <a href="#beranda" data-nav="beranda">Beranda</a>
+      <a href="#tentang" data-nav="tentang">Tentang</a>
+      <a href="#layanan" data-nav="layanan">Layanan</a>
+      <a href="#organisasi" data-nav="organisasi">Organisasi</a>
+      <a href="#pustakawan" data-nav="pustakawan">Pustakawan</a>
+      <a href="#kontak" data-nav="kontak">Kontak</a>
+      <a href="https://perpustakaanbbs.infy.click/index.php" class="cta" target="_blank" rel="noopener">Digilib</a>
+    </div>
+  </div>
+</nav>
+ 
+<section class="hero" id="beranda">
+  <div class="wrap hero-inner">
+    <div class="hero-text">
+      <span class="tracked reveal">Portal Perpustakaan Digital</span>
+      <h1 class="reveal reveal-delay-1">Selamat Datang di <span class="grad-text">Perpustakaan SMP IT Bina Bangsa Sejahtera</span></h1>
+      <p class="tagline reveal reveal-delay-2">Ruang belajar dan membaca — koleksi cetak, koleksi digital, dan katalog daring dalam satu portal perpustakaan.</p>
+      <div class="hero-actions reveal reveal-delay-3">
+        <a href="https://perpustakaanbbs.infy.click/index.php" class="btn btn-primary" target="_blank" rel="noopener">Masuk ke Digilib →</a>
+        <a href="#layanan" class="btn btn-ghost">Lihat Layanan</a>
+      </div>
+    </div>
+    <div class="hero-art reveal reveal-delay-2" id="heroArt">
+      <div class="hero-glow" id="heroGlow"></div>
+      <div class="hero-blob"></div>
+      <svg viewBox="0 0 420 400" xmlns="http://www.w3.org/2000/svg">
+        <circle class="floaty" cx="58" cy="70" r="16" fill="var(--accent-soft)"/>
+        <circle class="floaty-slow" cx="378" cy="120" r="11" fill="var(--accent)"/>
+        <circle class="floaty" cx="368" cy="330" r="14" fill="var(--primary-soft)"/>
+        <g class="floaty-slow">
+          <rect x="60" y="230" width="48" height="120" rx="6" fill="var(--accent)"/>
+          <rect x="112" y="200" width="48" height="150" rx="6" fill="var(--primary)"/>
+          <rect x="164" y="250" width="48" height="100" rx="6" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="2"/>
+        </g>
+        <g>
+          <rect x="150" y="40" width="220" height="270" rx="24" fill="var(--primary-deep)"/>
+          <rect x="168" y="58" width="184" height="200" rx="10" fill="#fff"/>
+          <path d="M188 90h60M188 108h144M188 126h144M188 144h100" stroke="var(--primary-soft)" stroke-width="8" stroke-linecap="round"/>
+          <circle cx="260" cy="200" r="26" fill="var(--primary-soft)"/>
+          <path d="M250 200h20M260 190v20" stroke="var(--primary)" stroke-width="4" stroke-linecap="round"/>
+          <rect x="200" y="278" width="140" height="14" rx="7" fill="var(--accent)"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+ 
+<section id="tentang">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="tracked">Tentang Kami</span>
+      <h2>Bukan sekadar tempat menyimpan buku</h2>
+    </div>
+    <div class="about-text reveal reveal-delay-1">
+      <p>Perpustakaan SMP IT Bina Bangsa Sejahtera melayani seluruh siswa, guru, dan staf dalam kegiatan membaca, riset, dan literasi digital sehari-hari. Katalog dikelola melalui SLiMS agar koleksi mudah ditelusuri kapan saja, dilengkapi koleksi digital berupa e-book dan buletin sekolah.</p>
+    </div>
+    <div class="about-cards">
+      <a href="#layanan" class="mini-card reveal">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h9a3 3 0 0 1 3 3v13H7a3 3 0 0 1-3-3V4Z"/><path d="M16 7h4v13a3 3 0 0 1-3 3h-1"/></svg></div>
+        <h3>Koleksi &amp; Layanan</h3>
+        <p>Buku cetak, referensi, dan layanan sirkulasi lengkap.</p>
+        <span class="go">Selengkapnya →</span>
+      </a>
+      <a href="#pustakawan" class="mini-card reveal reveal-delay-1">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg></div>
+        <h3>Kegiatan Literasi</h3>
+        <p>Pojok literasi dan bimbingan riset bersama pustakawan.</p>
+        <span class="go">Selengkapnya →</span>
+      </a>
+      <a href="#kanal" class="mini-card reveal reveal-delay-2">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></div>
+        <h3>Layanan Digital</h3>
+        <p>Katalog daring, e-book, dan flipbook dalam satu pintu.</p>
+        <span class="go">Selengkapnya →</span>
+      </a>
+    </div>
+  </div>
+</section>
+ 
+<section class="layanan-section" id="layanan">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="tracked">Layanan</span>
+      <h2>Apa yang kami tawarkan?</h2>
+      <p>Layanan utama yang tersedia untuk siswa dan guru SMP IT BBS.</p>
+    </div>
+    <div class="feature-grid">
+      <div class="feature-card reveal"><div class="icon" style="background:var(--primary);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h9a3 3 0 0 1 3 3v13H7a3 3 0 0 1-3-3V4Z"/><path d="M16 7h4v13a3 3 0 0 1-3 3h-1"/></svg></div><h4>Sirkulasi</h4><p>Peminjaman, perpanjangan, dan pengembalian buku.</p></div>
+      <div class="feature-card reveal reveal-delay-1"><div class="icon" style="background:var(--accent);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19V5a2 2 0 0 1 2-2h8l6 6v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z"/><path d="M14 3v6h6"/></svg></div><h4>Referensi</h4><p>Koleksi rujukan untuk dibaca di tempat.</p></div>
+      <div class="feature-card reveal reveal-delay-2"><div class="icon" style="background:var(--primary);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></div><h4>Digital Library</h4><p>Telusuri katalog buku secara daring.</p></div>
+      <div class="feature-card reveal reveal-delay-3"><div class="icon" style="background:var(--accent);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></div><h4>Koleksi Digital</h4><p>E-book dan buletin sekolah format digital.</p></div>
+      <div class="feature-card reveal"><div class="icon" style="background:var(--accent);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20s-7-4.35-9.5-8.5C1 8 2.5 4.5 6 4.5c2 0 3.5 1.2 4 2.4C10.5 5.7 12 4.5 14 4.5c3.5 0 5 3.5 3.5 7C15 16.65 12 20 12 20Z"/></svg></div><h4>Pojok Literasi</h4><p>Ruang santai untuk membaca dan berdiskusi.</p></div>
+      <div class="feature-card reveal reveal-delay-1"><div class="icon" style="background:var(--primary);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10Z"/></svg></div><h4>Kotak Saran</h4><p>Sampaikan masukan untuk perpustakaan.</p></div>
+      <div class="feature-card reveal reveal-delay-2"><div class="icon" style="background:var(--accent);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 21V9l9-6 9 6v12"/><path d="M9 21v-8h6v8"/></svg></div><h4>Ruang Baca</h4><p>Area nyaman untuk belajar dan membaca.</p></div>
+      <div class="feature-card reveal reveal-delay-3"><div class="icon" style="background:var(--primary);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg></div><h4>Bimbingan Siswa</h4><p>Pendampingan riset dan tugas sekolah.</p></div>
+    </div>
+  </div>
+</section>
+ 
+<section id="organisasi">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="tracked">Organisasi</span>
+      <h2>Struktur Organisasi Perpustakaan</h2>
+    </div>
+    <div class="orgchart reveal">
+      <div class="org-node"><div class="role">Kepala Sekolah</div><div class="name">Bapak Syabar Suwardiman, S.Sos, M.Kom.</div></div>
+      <div class="org-connector"></div>
+      <div class="org-node"><div class="role">Ketua Perpustakaan</div><div class="name">Ibu Nailul Hikmah, M.Si.</div></div>
+      <div class="org-connector"></div>
+      <div class="org-node"><div class="role">Staf Perpustakaan</div><div class="name">Ibu Gita Safta Marlina</div></div>
+    </div>
+  </div>
+</section>
+ 
+<section id="pustakawan" style="background:var(--bg-alt);">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="tracked">Pustakawan</span>
+      <h2>Para Petugas Kami</h2>
+    </div>
+    <div class="team-grid">
+      <div class="team-card reveal reveal-delay-1"><div class="team-avatar"><span></span></div><div class="name">Bapak Syabar Suwardiman, S.Sos, M.Kom.</div><div class="role">Kepala Sekolah</div></div>
+      <div class="team-card reveal reveal-delay-2"><div class="team-avatar"><span></span></div><div class="name">Ibu Nailul Hikmah, M.Si.</div><div class="role">Ketua Perpustakaan</div></div>
+      <div class="team-card reveal reveal-delay-3">
+        <div class="avatar-ring"><div class="avatar-photo"><img src="img/Gita.png" alt="Ibu Gita Safta Marlina"></div></div>
+        <div class="name">Ibu Gita Safta Marlina</div><div class="role">Staf Perpustakaan</div>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<section id="kanal">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="tracked">Kanal Lainnya</span>
+      <h2>Semua layanan, dalam satu pintu</h2>
+    </div>
+    <div class="channels-grid">
+      <div class="channel-card reveal">
+        <span class="tag">Digilib · SLiMS</span>
+        <h3>Katalog Perpustakaan</h3>
+        <p>Telusuri seluruh koleksi buku dan cek status ketersediaannya secara langsung.</p>
+        <a href="https://perpustakaanbbs.infy.click/index.php" class="go" target="_blank" rel="noopener">Buka Digilib →</a>
+      </div>
+      <div class="channel-card reveal reveal-delay-1">
+        <span class="tag">E-Resource · AnyFlip</span>
+        <h3>Koleksi Digital &amp; E-Book</h3>
+        <p>Baca buletin, majalah sekolah, dan e-book koleksi perpustakaan dalam format flipbook.</p>
+        <!-- TODO: ganti dengan link AnyFlip setelah kamu membuat akun & mengunggah PDF -->
+        <a href="https://anyflip.com/" class="go" target="_blank" rel="noopener">Buka E-Resource →</a>
+      </div>
+      <div class="channel-card reveal">
+        <span class="tag">Blog</span>
+        <h3>Berita &amp; Kegiatan</h3>
+        <p>Informasi kegiatan literasi, resensi buku, dan pengumuman seputar perpustakaan.</p>
+        <!-- TODO: ganti dengan alamat blog kamu -->
+        <a href="https://blog.perpustakaanbbs.my.id" class="go" target="_blank" rel="noopener">Buka Blog →</a>
+      </div>
+      <div class="channel-card reveal reveal-delay-1">
+        <span class="tag">Saran</span>
+        <h3>Kotak Saran</h3>
+        <p>Sampaikan usulan judul buku baru atau masukan untuk layanan perpustakaan.</p>
+        <!-- TODO: ganti dengan link Google Form kotak saranmu -->
+        <a href="https://forms.gle/ganti-dengan-link-form-kamu" class="go" target="_blank" rel="noopener">Isi Formulir →</a>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<section id="kontak" style="background:var(--bg-alt);">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="tracked">Kontak</span>
+      <h2>Hubungi Kami</h2>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-info reveal">
+        <div class="info-card">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7-6-7-11a7 7 0 0 1 14 0c0 5-7 11-7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+          <div class="label">Alamat</div><div class="value">JL. Batuhulung KM 7 RT 003 RW 002 KEL. Margajaya KEC. Bogor Barat  Kota Bogor 16116</div>
+        </div>
+        <div class="info-card">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.7a2 2 0 0 1-.5 2.1L8 9.7a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.5 2.7.6a2 2 0 0 1 1.7 2Z"/></svg>
+          <div class="label">Telepon</div><div class="value">0251-8622826</div>
+        </div>
+        <div class="info-card">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+          <div class="label">Email</div><div class="value">perpustakaan@smpitbbs.sch.id</div>
+        </div>
+        <div class="info-card">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+          <div class="label">Jam Buka</div><div class="value">Senin–Jumat, 07.00–15.30</div>
+        </div>
+      </div>
+      <div class="form-card reveal reveal-delay-1">
+        <h3>Saran dan Masukan</h3>
+        <p>Kamu bisa tulis kritik, saran, masukan, maupun komentar tentang Perpustakaan SMP IT BBS di sini.</p>
+        <a href="https://forms.gle/ganti-dengan-link-form-kamu" class="btn btn-primary" target="_blank" rel="noopener">Isi Formulir Saran</a>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<div class="wrap">
+  <footer class="footer-wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="foot-brand">
+          <span class="brand-mark" style="background:var(--white);">
+    <img src="img/logo.png" alt="Logo SMP IT Bina Bangsa Sejahtera">
+</span>
+          SMP IT BBS Library
+        </div>
+        <p>Melayani siswa dan guru dalam kegiatan membaca, riset, dan literasi digital sehari-hari.</p>
+      </div>
+      <div>
+        <h4>Navigasi</h4>
+        <ul><li><a href="#beranda">Beranda</a></li><li><a href="#tentang">Tentang</a></li><li><a href="#layanan">Layanan</a></li><li><a href="#organisasi">Organisasi</a></li><li><a href="#pustakawan">Pustakawan</a></li></ul>
+      </div>
+      <div>
+        <h4>Kontak</h4>
+        <ul><li>JL. Batuhulung KM 7 RT 003 RW 002 KEL. Margajaya KEC. Bogor Barat  Kota Bogor 16116</li><li>perpustakaan@smpitbbs.sch.id</li><li>Senin–Jumat, 07.00–15.30</li></ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>©️ 2026 Perpustakaan SMP IT BBS. Seluruh hak dilindungi.</span>
+      <span>Dibangun untuk mendukung literasi sekolah.</span>
+    </div>
+  </footer>
+</div>
+ 
+<button class="to-top" id="toTop" aria-label="Kembali ke atas">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg>
+</button>
+ 
+<script>
+  /* ================= EFEK "WOW" ================= */
+ 
+  /* ---------- 1) Partikel meledak setiap klik di halaman ---------- */
+  (function(){
+    const canvas = document.getElementById('fx-canvas');
+    if(!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    const palette = ['#3245C7','#20287E','#F4A73B','#8C9BFF','#FFD48A'];
+    function resize(){ canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+    window.addEventListener('resize', resize); resize();
+ 
+    function burst(x, y){
+      const count = 20;
+      for(let i=0;i<count;i++){
+        const angle = (Math.PI*2*i/count) + Math.random()*0.4;
+        const speed = 2 + Math.random()*3.2;
+        particles.push({
+          x, y,
+          vx: Math.cos(angle)*speed,
+          vy: Math.sin(angle)*speed - 1.5,
+          size: 2 + Math.random()*3.5,
+          color: palette[Math.floor(Math.random()*palette.length)],
+          life: 1,
+          decay: 0.012 + Math.random()*0.012,
+          gravity: 0.09,
+          shape: Math.random() > 0.6 ? 'star' : 'circle'
+        });
+      }
+    }
+ 
+    function drawStar(cx, cy, r, color, alpha){
+      ctx.save();
+      ctx.globalAlpha = alpha;
+      ctx.translate(cx, cy);
+      ctx.beginPath();
+      for(let i=0;i<5;i++){
+        ctx.lineTo(Math.cos((18+i*72)*Math.PI/180)*r, -Math.sin((18+i*72)*Math.PI/180)*r);
+        ctx.lineTo(Math.cos((54+i*72)*Math.PI/180)*r*0.45, -Math.sin((54+i*72)*Math.PI/180)*r*0.45);
+      }
+      ctx.closePath();
+      ctx.fillStyle = color;
+      ctx.fill();
+      ctx.restore();
+    }
+ 
+    function tick(){
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      particles.forEach(p=>{
+        p.vy += p.gravity;
+        p.x += p.vx;
+        p.y += p.vy;
+        p.life -= p.decay;
+      });
+      particles = particles.filter(p => p.life > 0);
+      particles.forEach(p=>{
+        if(p.shape === 'star'){
+          drawStar(p.x, p.y, p.size*1.8, p.color, Math.max(p.life,0));
+        } else {
+          ctx.save();
+          ctx.globalAlpha = Math.max(p.life,0);
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size, 0, Math.PI*2);
+          ctx.fillStyle = p.color;
+          ctx.fill();
+          ctx.restore();
+        }
+      });
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+ 
+    document.addEventListener('click', (e)=>{
+      burst(e.clientX, e.clientY);
+    });
+  })();
+ 
+  /* ---------- 2) Ripple pada setiap tombol/link .btn dan .cta ---------- */
+  document.querySelectorAll('.btn, .nav-links a.cta').forEach(btn=>{
+    btn.style.overflow = btn.style.overflow || 'hidden';
+    btn.addEventListener('click', function(e){
+      const rect = btn.getBoundingClientRect();
+      const ripple = document.createElement('span');
+      const size = Math.max(rect.width, rect.height) * 1.8;
+      ripple.className = 'btn-ripple';
+      ripple.style.width = ripple.style.height = size + 'px';
+      ripple.style.left = (e.clientX - rect.left - size/2) + 'px';
+      ripple.style.top = (e.clientY - rect.top - size/2) + 'px';
+      btn.appendChild(ripple);
+      setTimeout(()=> ripple.remove(), 650);
+    });
+  });
+ 
+  /* ---------- 3) Efek magnet lembut pada tombol utama ---------- */
+  document.querySelectorAll('.btn-primary, .nav-links a.cta').forEach(btn=>{
+    btn.addEventListener('mousemove', (e)=>{
+      const rect = btn.getBoundingClientRect();
+      const relX = e.clientX - rect.left - rect.width/2;
+      const relY = e.clientY - rect.top - rect.height/2;
+      btn.style.transform = `translate(${relX*0.18}px, ${relY*0.35}px) translateY(-2px)`;
+    });
+    btn.addEventListener('mouseleave', ()=>{ btn.style.transform = ''; });
+  });
+ 
+  /* ---------- 4) Spotlight kartu mengikuti kursor ---------- */
+  document.querySelectorAll('.mini-card, .feature-card, .channel-card').forEach(card=>{
+    card.addEventListener('mousemove', (e)=>{
+      const rect = card.getBoundingClientRect();
+      card.style.setProperty('--mx', (e.clientX - rect.left) + 'px');
+      card.style.setProperty('--my', (e.clientY - rect.top) + 'px');
+    });
+  });
+ 
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('is-visible'); io.unobserve(entry.target); } });
+  }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+  revealEls.forEach(el => io.observe(el));
+ 
+  const navbar = document.getElementById('navbar');
+  const scrollProgress = document.getElementById('scrollProgress');
+  function onScroll(){
+    const y = window.scrollY;
+    if (navbar) navbar.classList.toggle('is-scrolled', y > 8);
+    const docH = document.documentElement.scrollHeight - window.innerHeight;
+    if (scrollProgress) scrollProgress.style.width = (docH > 0 ? (y / docH) * 100 : 0) + '%';
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+ 
+  /* ---------- Highlight menu aktif sesuai posisi scroll ---------- */
+  const navAnchors = document.querySelectorAll('#navLinks a[data-nav]');
+  const sections = Array.from(navAnchors).map(a => document.getElementById(a.dataset.nav)).filter(Boolean);
+  const navObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const id = entry.target.id;
+      const link = document.querySelector('#navLinks a[data-nav="' + id + '"]');
+      if (!link) return;
+      if (entry.isIntersecting) {
+        navAnchors.forEach(a => a.classList.remove('active'));
+        link.classList.add('active');
+      }
+    });
+  }, { threshold: 0.4, rootMargin: '-80px 0px -55% 0px' });
+  sections.forEach(sec => navObserver.observe(sec));
+ 
+  /* ---------- Glow lembut mengikuti kursor di hero ---------- */
+  const heroArt = document.getElementById('heroArt');
+  const heroGlow = document.getElementById('heroGlow');
+  if (heroArt && heroGlow) {
+    heroArt.addEventListener('mousemove', (e) => {
+      const rect = heroArt.getBoundingClientRect();
+      heroGlow.style.left = (e.clientX - rect.left) + 'px';
+      heroGlow.style.top = (e.clientY - rect.top) + 'px';
+    });
+  }
+ 
+  /* ---------- Tombol kembali ke atas ---------- */
+  const toTopBtn = document.getElementById('toTop');
+  if (toTopBtn) {
+    window.addEventListener('scroll', () => {
+      toTopBtn.classList.toggle('show', window.scrollY > 480);
+    }, { passive: true });
+    toTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+</script>
+ 
+</body>
+</html>
+ 
+
+
+
+
