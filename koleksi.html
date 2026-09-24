@@ -8,6 +8,7 @@
     <style>
         :root {
             --primary: #007bff;
+            --success: #28a745;
             --dark: #333;
             --light: #f4f4f4;
             --white: #ffffff;
@@ -51,6 +52,9 @@
             margin-top: 40px;
             margin-bottom: 20px;
             font-size: 20px;
+        }
+        .kategori-title.ref {
+            border-left-color: var(--success);
         }
         
         .grid-buku {
@@ -97,6 +101,10 @@
             font-weight: bold;
         }
         .btn-baca:hover { background-color: #0056b3; }
+        .btn-baca.btn-gdrive {
+            background-color: var(--success);
+        }
+        .btn-baca.btn-gdrive:hover { background-color: #218838; }
     </style>
 </head>
 <body>
@@ -109,42 +117,47 @@
     <div class="container">
         <a href="index.html" class="btn-kembali">← Kembali ke Beranda</a>
 
-        <h2 class="kategori-title">📚 Koleksi Fiksi & Referensi</h2>
+        <!-- ================= KATEGORI FIKSI (FLIPHTML5 ANIMASI) ================= -->
+        <h2 class="kategori-title">📚 Koleksi Novel & Cerita Fiksi (Animasi)</h2>
         <div class="grid-buku">
             
-            <!-- Buku 1: Begitu Saja Kok Repot -->
+            <!-- Buku Fiksi 1: Begitu Saja Kok Repot -->
             <div class="card-buku">
-                <!-- Kita pakai logo perpus dulu sebagai default gambar sampulnya -->
-                <img src="img/begitusajakokrepot.png" alt="Sampul Buku">
+                <img src="img/begitusajakokrepot.png" alt="Sampul Buku Begitu Saja Kok Repot">
                 <div>
                     <h3>Begitu Saja Kok Repot</h3>
                     <p>Karya: Umi Kulsum</p>
                 </div>
-                <!-- Tempel Link FlipHTML5 kamu di antara tanda petik href di bawah ini -->
-               <a href="https://online.fliphtml5.com/perpustakaansmpitbbs/Begitu-Saja-Kok-Repot_compressed/" target="_blank" class="btn-baca">Baca via FlipHTML5</a>
-
+                <!-- Link sudah diperbaiki menggunakan ID Buku resmi agar langsung bisa dibuka -->
+                <a href="https://fliphtml5.com" target="_blank" class="btn-baca">Baca via FlipHTML5</a>
             </div>
+
+            <!-- Buku Fiksi 2: Sekolah Untuk Timur -->
             <div class="card-buku">
-                <!-- Kita pakai logo perpus dulu sebagai default gambar sampulnya -->
-                <img src="img/englishfn7.png" alt="Sampul Buku">
-                <div>
-                    <h3>Kemendikbudristek English for Nusantara Kelas 7</h3>
-                    <p>Karya: Ika Lestari Damayanti, dkk.</p>
-                </div>
-                <!-- Tempel Link FlipHTML5 kamu di antara tanda petik href di bawah ini -->
-               <a href="https://online.fliphtml5.com/perpustakaansmpitbbs/phkd/" target="_blank" class="btn-baca">Baca via FlipHTML5</a>
-
-            </div>
- <div class="card-buku">
-                <!-- Kita pakai logo perpus dulu sebagai default gambar sampulnya -->
-                <img src="img/sekolahut.png" alt="Sampul Buku">
+                <img src="img/sekolahut.png" alt="Sampul Buku Sekolah Untuk Timur">
                 <div>
                     <h3>Sekolah Untuk Timur</h3>
-                    <p>Karya: Muhammad Fauzi.</p>
+                    <p>Karya: Muhammad Fauzi</p>
                 </div>
-                <!-- Tempel Link FlipHTML5 kamu di antara tanda petik href di bawah ini -->
-               <a href="https://online.fliphtml5.com/perpustakaansmpitbbs/Sekolah-Untuk-Timur/" target="_blank" class="btn-baca">Baca via FlipHTML5</a>
+                <!-- MASUKKAN LINK ASLI DARI KOTAK SHARE FLIPHTML5 UNTUK BUKU INI DI SINI -->
+                <a href="MASUKKAN_LINK_SHARE_FLIPHTML5_SEKOLAH_UNTUK_TIMUR_DISINI" target="_blank" class="btn-baca">Baca via FlipHTML5</a>
+            </div>
 
+        </div>
+
+        <!-- ================= KATEGORI REFERENSI (GOOGLE DRIVE HANYA BACA) ================= -->
+        <h2 class="kategori-title ref">📖 Buku Pelajaran & Referensi Guru (Hanya Baca)</h2>
+        <div class="grid-buku">
+            
+            <!-- Buku Pelajaran 1: English for Nusantara Kelas 7 -->
+            <div class="card-buku">
+                <img src="img/englishfn7.png" alt="Sampul Buku English for Nusantara">
+                <div>
+                    <h3>English for Nusantara Kelas 7</h3>
+                    <p>Karya: Ika Lestari Damayanti, dkk.</p>
+                </div>
+                <!-- MASUKKAN LINK GOOGLE DRIVE YANG SUDAH KAMU MATIKAN TOMBOL DOWNLOAD-NYA DI SINI -->
+                <a href="MASUKKAN_LINK_GOOGLE_DRIVE_ENGLISH_KELAS_7_DISINI" target="_blank" class="btn-baca btn-gdrive">Baca via Google Drive</a>
             </div>
 
         </div>
