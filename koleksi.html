@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Koleksi E-Book Digital - Perpustakaan SMP IT BBS</title>
+    <link rel="icon" type="image/png" href="img/logo.png">
+    <style>
+        :root {
+            --primary: #007bff;
+            --dark: #333;
+            --light: #f4f4f4;
+            --white: #ffffff;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--light);
+            color: var(--dark);
+        }
+        header {
+            background-color: var(--white);
+            padding: 20px;
+            text-align: center;
+            border-bottom: 3px solid var(--primary);
+        }
+        header h1 { margin: 0; color: var(--primary); font-size: 24px; }
+        header p { margin: 5px 0 0 0; color: #666; }
+        
+        .container {
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+        .btn-kembali {
+            display: inline-block;
+            margin-bottom: 20px;
+            padding: 10px 15px;
+            background-color: var(--dark);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        .btn-kembali:hover { background-color: #555; }
+
+        .kategori-title {
+            border-left: 5px solid var(--primary);
+            padding-left: 10px;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+        
+        .grid-buku {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 25px;
+        }
+        .card-buku {
+            background-color: var(--white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: center;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .card-buku img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-bottom: 12px;
+        }
+        .card-buku h3 {
+            font-size: 16px;
+            margin: 5px 0;
+            color: var(--dark);
+        }
+        .card-buku p {
+            font-size: 13px;
+            color: #777;
+            margin: 0 0 15px 0;
+        }
+        .btn-baca {
+            display: block;
+            padding: 8px 0;
+            background-color: var(--primary);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .btn-baca:hover { background-color: #0056b3; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Koleksi E-Book Digital</h1>
+        <p>Perpustakaan SMP IT Bina Bangsa Sejahtera</p>
+    </header>
+
+    <div class="container">
+        <a href="index.html" class="btn-kembali">← Kembali ke Beranda</a>
+
+        <h2 class="kategori-title">📚 Koleksi Fiksi & Referensi</h2>
+        <div class="grid-buku">
+            
+            <!-- Buku 1: Begitu Saja Kok Repot -->
+            <div class="card-buku">
+                <!-- Kita pakai logo perpus dulu sebagai default gambar sampulnya -->
+                <img src="img/logo.png" alt="Sampul Buku">
+                <div>
+                    <h3>Begitu Saja Kok Repot</h3>
+                    <p>Karya: Pustakawan</p>
+                </div>
+                <!-- Tempel Link FlipHTML5 kamu di antara tanda petik href di bawah ini -->
+                <a href="https://online.fliphtml5.com/perpustakaansmpitbbs/Begitu-Saja-Kok-Repot_compressed/="_blank" class="btn-baca">Baca via FlipHTML5</a>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>
